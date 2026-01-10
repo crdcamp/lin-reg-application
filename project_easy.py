@@ -37,11 +37,12 @@ print("Overview:\n", df_student.head(), "\n")
 print("Shape: ", df_student.shape, "\n")
 print("Description:\n", df_student.describe(), "\n")
 print("Data Types:\n", df_student.dtypes, "\n")
+print("Null Values:\n", df_student.isnull().sum())
 
 # %% 2) Clean the Data Frame
 """
 I don't believe this data needs to be cleaned, so we'll skip
-this step for now. We'll save this for the harder challenge.
+this step for now. We'll save this for the challenge data.
 """
 
 # %% 3) Explore Global Properties.
@@ -51,14 +52,23 @@ aggregation functions to summarize the data.
 """
 
 """
-First, we'll test if there's any relationship between
-hours of study and performance.
+1) Test if there's any relationship between hours of study and performance.
 
-Then, we'll test if hours of sleep has an effect on performance.
+2) Test if hours of sleep has an effect on performance.
 
-Finally, we'll test if hours of study and sleep combined have an effect on performance.
+3) Test if hours of study and sleep combined have an effect on performance.
 """
 
-# Begin by testing number of unique hours
+# Define range of hours studied
+print(
+    "Range of hours studied:",
+    df_student["Hours Studied"].max() - df_student["Hours Studied"].min(),
+    "hours",
+)
+# Define how many students studied for each hour category
+print(
+    "Student Count for Hours Studied:\n",
+    df_student["Hours Studied"].value_counts().sort_index(),
+)
 
-print()
+# Plot to visualize distribution
