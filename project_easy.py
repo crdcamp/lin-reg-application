@@ -1,8 +1,7 @@
-# Link to data: https://www.kaggle.com/datasets/nikhil7280/student-performance-multiple-linear-regression/data
 # %% Imports and options
+# Link to data: https://www.kaggle.com/datasets/nikhil7280/student-performance-multiple-linear-regression/data
 import pandas as pd
 import numpy as np
-
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -67,18 +66,22 @@ print(
     "hours",
 )
 
-# Plot to visualize distribution
-plt.hist(df_student["Hours Studied"], bins=9)
+# Plot to visualize distributions for hours of study
 plt.xlabel("Hours of Study")
 plt.ylabel("Student Count")
-
+plt.hist(df_student["Hours Studied"], bins=9);
 # Looks like the distribution of hours studied is roughly the same count across all hours.
-
 # %% Hours Studied vs. Performance Box Plot
 # Let's now check if there is any linear relationship when using a scatterplot.
 sns.boxplot(
     data=df_student, x=df_student["Hours Studied"], y=df_student["Performance Index"]
 );
-# The results indicate that hours studied have a positive impact on performance
-# This conclusion is further reinforced by the fact that the distribution of the
-# student count and the hours of study is (unrealistically) even
+
+"""
+The results indicate that hours studied has a positive impact on performance
+This conclusion is further reinforced by the fact that the distribution of the
+student count and the hours of study is (unrealistically) even.
+
+Moreover, the boxplot spread (is that the correct terminology?) indicates
+that the spread of scores based on hours of study is also pretty even
+"""
