@@ -59,7 +59,7 @@ aggregation functions to summarize the data.
 3) Visualize and test a potential relationship of both sleep and study on performance.
 """
 
-# %% Histogram
+# %% Hours Studied vs. Performance Histogram
 # Define range of hours studied
 print(
     "Range of hours studied:",
@@ -74,9 +74,11 @@ plt.ylabel("Student Count")
 
 # Looks like the distribution of hours studied is roughly the same count across all hours.
 
-# %% Scatter Plot
+# %% Hours Studied vs. Performance Box Plot
 # Let's now check if there is any linear relationship when using a scatterplot.
 sns.boxplot(
     data=df_student, x=df_student["Hours Studied"], y=df_student["Performance Index"]
 );
-# The results indicate that hours studied do have an effect on performance
+# The results indicate that hours studied have a positive impact on performance
+# This conclusion is further reinforced by the fact that the distribution of the
+# student count and the hours of study is (unrealistically) even
