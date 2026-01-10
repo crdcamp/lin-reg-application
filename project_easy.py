@@ -4,8 +4,6 @@ import pandas as pd
 import numpy as np
 
 import matplotlib.pyplot as plt
-from pandas._libs.tslibs.offsets import Hour
-from pandas.core.algorithms import value_counts_arraylike
 import seaborn as sns
 
 # pd.set_option("display.width", 800)
@@ -61,6 +59,7 @@ aggregation functions to summarize the data.
 3) Visualize and test a potential relationship of both sleep and study on performance.
 """
 
+# %% Histogram
 # Define range of hours studied
 print(
     "Range of hours studied:",
@@ -70,7 +69,14 @@ print(
 
 # Plot to visualize distribution
 plt.hist(df_student["Hours Studied"], bins=9)
-"""
-Looks like the distribution of hours studied has roughly the same count across all hours.
-This could potentially effect the predictive power of hours studied dependent
-"""
+plt.xlabel("Hours of Study")
+plt.ylabel("Student Count")
+
+# Looks like the distribution of hours studied is roughly the same count across all hours.
+
+# %% Scatter Plot
+# Let's now check if there is any linear relationship when using a scatterplot.
+sns.boxplot(
+    data=df_student, x=df_student["Hours Studied"], y=df_student["Performance Index"]
+);
+# The results indicate that hours studied do have an effect on performance
