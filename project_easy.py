@@ -85,3 +85,13 @@ student count and the hours of study is (unrealistically) even.
 Moreover, the boxplot spread (is that the correct terminology?) indicates
 that the spread of scores based on hours of study is also pretty even
 """
+
+# Now let's get an idea of the distribution density using a violin plot
+sns.violinplot(
+    data=df_student, x=df_student["Hours Studied"], y=df_student["Performance Index"]
+);
+"""
+Again, the distributions are unusually even (likely due to how this is a more introductory set)
+With my limited knowledge, I believe this indicates that hours studied might be a
+strong predictor for performance
+"""
