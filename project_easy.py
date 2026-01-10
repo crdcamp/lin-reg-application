@@ -67,15 +67,19 @@ print(
 )
 
 # Plot to visualize distributions for hours of study
+plt.figure()
 plt.xlabel("Hours of Study")
 plt.ylabel("Student Count")
-plt.hist(df_student["Hours Studied"], bins=9);
+plt.hist(df_student["Hours Studied"], bins=9)
+plt.show();
 # Looks like the distribution of hours studied is roughly the same count across all hours.
 # %% Hours Studied vs. Performance Box Plot
 # Let's now check if there is any linear relationship when using a scatterplot.
+plt.figure()
 sns.boxplot(
     data=df_student, x=df_student["Hours Studied"], y=df_student["Performance Index"]
-);
+)
+plt.show();
 
 """
 The results indicate that hours studied has a positive impact on performance
@@ -86,12 +90,24 @@ Moreover, the boxplot spread (is that the correct terminology?) indicates
 that the spread of scores based on hours of study is also pretty even
 """
 
+# %% Hours Studied vs. Performance Violin Plot
 # Now let's get an idea of the distribution density using a violin plot
+plt.figure()
 sns.violinplot(
     data=df_student, x=df_student["Hours Studied"], y=df_student["Performance Index"]
-);
+)
+plt.show();
+
 """
-Again, the distributions are unusually even (likely due to how this is a more introductory set)
-With my limited knowledge, I believe this indicates that hours studied might be a
+Again, the distributions are unusually even (likely due to this being an introductory data set).
+With my limited knowledge, I believe this further reinforces that hours studied might be a
 strong predictor for performance
 """
+
+# %% Hours Studied vs. Performance Scatter Plot
+# Then let's throw in a scatterplot just to see what happens (I think the box and violin plots already tell us enough though)
+plt.figure()
+hours_sorted = df_student["Hours Studied"].sort_values()
+performance_sorted = df_student["Performance Index"].sort_values()
+sns.regplot(data=df_student, x=hours_sorted, y=performance_sorted)
+plt.show();
