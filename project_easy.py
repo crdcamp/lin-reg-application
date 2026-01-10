@@ -111,3 +111,7 @@ hours_sorted = df_student["Hours Studied"].sort_values()
 performance_sorted = df_student["Performance Index"].sort_values()
 sns.regplot(data=df_student, x=hours_sorted, y=performance_sorted)
 plt.show();
+
+"""
+Same story with less detail. Let's move on!
+"""
