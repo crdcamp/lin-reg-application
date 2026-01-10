@@ -4,6 +4,8 @@ import pandas as pd
 import numpy as np
 
 import matplotlib.pyplot as plt
+from pandas._libs.tslibs.offsets import Hour
+from pandas.core.algorithms import value_counts_arraylike
 import seaborn as sns
 
 # pd.set_option("display.width", 800)
@@ -52,11 +54,11 @@ aggregation functions to summarize the data.
 """
 
 """
-1) Test if there's any relationship between hours of study and performance.
+1) Visualize and test a potential relationship between hours of study and performance.
 
-2) Test if hours of sleep has an effect on performance.
+2) Visualize and test a potential relationship of sleep on performance.
 
-3) Test if hours of study and sleep combined have an effect on performance.
+3) Visualize and test a potential relationship of both sleep and study on performance.
 """
 
 # Define range of hours studied
@@ -65,10 +67,10 @@ print(
     df_student["Hours Studied"].max() - df_student["Hours Studied"].min(),
     "hours",
 )
-# Define how many students studied for each hour category
-print(
-    "Student Count for Hours Studied:\n",
-    df_student["Hours Studied"].value_counts().sort_index(),
-)
 
 # Plot to visualize distribution
+plt.hist(df_student["Hours Studied"], bins=9)
+"""
+Looks like the distribution of hours studied has roughly the same count across all hours.
+This could potentially effect the predictive power of hours studied dependent
+"""
