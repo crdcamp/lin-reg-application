@@ -51,13 +51,17 @@ aggregation functions to summarize the data.
 """
 
 """
+Initial data exploration ideas:
+
 1) Visualize and test a potential relationship between hours of study and performance.
 
 2) Visualize and test a potential relationship of sleep on performance.
 
 3) Visualize and test a potential relationship of both sleep and study on performance.
-"""
 
+4) Visualize all the data to explore other potential correlations and relationships
+"""
+"""HOURS STUDIED VS. PERFORMANCE"""
 # %% Hours Studied vs. Performance Histogram
 # Define range of hours studied
 print(
@@ -65,6 +69,9 @@ print(
     df_student["Hours Studied"].max() - df_student["Hours Studied"].min(),
     "hours",
 )
+
+print("Max hours of study: ", df_student["Hours Studied"].max())
+print("Min hours of study: ", df_student["Hours Studied"].min())
 
 # Plot to visualize distributions for hours of study
 plt.figure()
@@ -113,5 +120,19 @@ sns.regplot(data=df_student, x=hours_sorted, y=performance_sorted)
 plt.show();
 
 """
-Same story with less detail. Let's move on!
+Seems to be consistent with the histograms. Let's move on!
+"""
+
+"""SLEEP VS. PERFORMANCE"""
+# %% Sleep vs. Performance Histogram
+print("Range of sleep hours: ", df_student["Sleep Hours"].max() - df_student["Sleep Hours"].min())
+print("Max hours of sleep: ", df_student["Sleep Hours"].max())
+print("Min hours of sleep: ", df_student["Sleep Hours"].min(), "\n")
+
+plt.figure()
+plt.xlabel("Hours of Sleep")
+plt.ylabel("Student Count")
+plt.hist(df_student["Sleep Hours"], bins=9);
+"""
+Same story as before. We got a pretty even distribution here as well.
 """
