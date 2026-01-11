@@ -1,19 +1,20 @@
 # %% Imports and options
-# Link to data: https://www.kaggle.com/datasets/nikhil7280/student-performance-multiple-linear-regression/data
+# Data Source: https://www.kaggle.com/datasets/nikhil7280/student-performance-multiple-linear-regression/data
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 # pd.set_option("display.width", 800)
 """
+====================================================================================================
 EXPLORATORY DATA ANALYSIS
+====================================================================================================
 
 Simple EDA:
 
 The TA from my beloved Harvard course recommends the following
-ruberic for exploratory data analysis:
-    1) Build a dataframe from the data (ideally, put all data in this object)
+rubric for exploratory data analysis:
+    1) Build a data frame from the data (ideally, put all data in this object)
     2) Clean the dataframe: it should have the following properties:
         - Each row describes a single object
         - Each column describes a property of that object
@@ -21,11 +22,11 @@ ruberic for exploratory data analysis:
         - Columns contain atomic properties that cannot be further decomposed
     3) Explore global properties. Use histograms, scatter plots, and
        aggregation functions to summarize the data.
-    4) Explore group properties. Use groupby and small multiples to
+    4) Explore group properties. Use `groupby` and small multiples to
        compare subsets of the data.
 
 So... that's what we'll do!
-"""
+""";
 
 # %% Load Data
 df_student = pd.read_csv("data/Student_Performance.csv")
@@ -42,16 +43,16 @@ print("Null Values:\n", df_student.isnull().sum())
 """
 I don't believe this data needs to be cleaned, so we'll skip
 this step for now. We'll save this for the challenge data.
-"""
+""";
 
 # %% 3) Explore Global Properties.
 """
 Use histograms, scatter plots, and
 aggregation functions to summarize the data.
-"""
+""";
 
 """
-Initial data exploration ideas:
+Initial data exploration:
 
 1) Visualize and test a potential relationship between hours of study and performance.
 
@@ -60,8 +61,9 @@ Initial data exploration ideas:
 3) Visualize and test a potential relationship of both sleep and study on performance.
 
 4) Visualize all the data to explore other potential correlations and relationships
-"""
-"""HOURS STUDIED VS. PERFORMANCE"""
+""";
+
+"""HOURS STUDIED VS. PERFORMANCE""";
 # %% Hours Studied vs. Performance Histogram
 # Define range of hours studied
 print(
@@ -95,7 +97,7 @@ student count and the hours of study is (unrealistically) even.
 
 Moreover, the boxplot spread (is that the correct terminology?) indicates
 that the spread of scores based on hours of study is also pretty even
-"""
+""";
 
 # %% Hours Studied vs. Performance Violin Plot
 # Now let's get an idea of the distribution density using a violin plot
@@ -109,7 +111,7 @@ plt.show();
 Again, the distributions are unusually even (likely due to this being an introductory data set).
 With my limited knowledge, I believe this further reinforces that hours studied might be a
 strong predictor for performance
-"""
+""";
 
 # %% Hours Studied vs. Performance Scatter Plot
 # Then let's throw in a scatterplot just to see what happens (I think the box and violin plots already tell us enough though)
@@ -121,9 +123,9 @@ plt.show();
 
 """
 Seems to be consistent with the histograms. Let's move on!
-"""
+""";
 
-"""SLEEP VS. PERFORMANCE"""
+"""SLEEP VS. PERFORMANCE""";
 # %% Sleep vs. Performance Histogram
 print("Range of sleep hours: ", df_student["Sleep Hours"].max() - df_student["Sleep Hours"].min())
 print("Max hours of sleep: ", df_student["Sleep Hours"].max())
@@ -132,7 +134,7 @@ print("Min hours of sleep: ", df_student["Sleep Hours"].min(), "\n")
 plt.figure()
 plt.xlabel("Hours of Sleep")
 plt.ylabel("Student Count")
-plt.hist(df_student["Sleep Hours"], bins=9);
+plt.hist(df_student["Sleep Hours"], bins=6);
 """
 Same story as before. We got a pretty even distribution here as well.
-"""
+""";
