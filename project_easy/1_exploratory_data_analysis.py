@@ -4,7 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# pd.set_option("display.width", 800)
+plt.style.use('dark_background')
+#pd.set_option("display.width", 800)
 """
 ====================================================================================================
 EXPLORATORY DATA ANALYSIS
@@ -81,15 +82,17 @@ plt.xlabel("Hours of Study")
 plt.ylabel("Student Count")
 plt.hist(df_student["Hours Studied"], bins=9)
 plt.show();
-# Looks like the distribution of hours studied is roughly the same count across all hours.
+"""
+Looks like the distribution of hours studied is roughly the same count across all hours.
+""";
+
 # %% Hours Studied vs. Performance Box Plot
-# Let's now check if there is any linear relationship when using a scatterplot.
+# Let's now check if there is any linear relationship when using a scatter plot.
 plt.figure()
 sns.boxplot(
     data=df_student, x=df_student["Hours Studied"], y=df_student["Performance Index"]
 )
 plt.show();
-
 """
 The results indicate that hours studied has a positive impact on performance
 This conclusion is further reinforced by the fact that the distribution of the
@@ -114,15 +117,17 @@ strong predictor for performance
 """;
 
 # %% Hours Studied vs. Performance Scatter Plot
-# Then let's throw in a scatterplot just to see what happens (I think the box and violin plots already tell us enough though)
+# Then let's throw in a scatterplot just to see what happens (I think the box and violin plots already tell us enough though,
+# and I don't believe a scatterplot applies to the categorical nature of the hours anyway).
 plt.figure()
 hours_sorted = df_student["Hours Studied"].sort_values()
 performance_sorted = df_student["Performance Index"].sort_values()
 sns.regplot(data=df_student, x=hours_sorted, y=performance_sorted)
 plt.show();
-
 """
-Seems to be consistent with the histograms. Let's move on!
+Seems to be consistent with the histograms. Also worth noting that both 1 hour
+of study and 9 hours of study have greater differences between the lowest and
+highest performers relative to the rest of the study hour sets.
 """;
 
 """SLEEP VS. PERFORMANCE""";
