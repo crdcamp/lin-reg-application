@@ -72,6 +72,8 @@ INITIAL DATA EXPLORATION:
 3) Visualize and test a potential relationship of both sleep and study on performance.
 
 4) Visualize all the data to explore other potential correlations and relationships
+
+(Yes, I know the plotting should be functions but I want to practice)
 """;
 
 """HOURS STUDIED VS. PERFORMANCE""";
@@ -161,15 +163,9 @@ but I don't think this is indicative of any trend as of now.
 # %% Visualize and test a potential relationship of both sleep and study on performance
 # First, we'll need to split the data and make a multiple linear regression model
 train_data, test_data = train_test_split(df_student, test_size=0.2, random_state=42)
-print("Train data shape: ", train_data.shape)
-print("Test data shape: ", test_data.shape, "\n")
 
-sleep_study_model = LinearRegression()
-sleep_study_model.fit(X_train, y_train)
+X_train = train_data[["Hours Studied", "Sleep Hours"]]
+y_train = train_data["Performance Index"]
 
-predictions = sleep_study_model.predict(X_test)
-
-print(
-    "Mean Squared Error: ", mean_squared_error(y_test, predictions), "\n"
-    "Mean Absolute Error: ", mean_absolute_error(y_test, predictions), "\n"
-)
+X_test = test_data[["Hours Studied", "Sleep Hours"]]
+y_test = test_data["Performance Index"]
