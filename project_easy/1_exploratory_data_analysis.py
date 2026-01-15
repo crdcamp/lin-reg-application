@@ -15,6 +15,7 @@ Simple EDA:
 
 The TA from my beloved Harvard course recommends the following
 rubric for exploratory data analysis:
+(Source: )
     1) Build a data frame from the data (ideally, put all data in this object)
     2) Clean the dataframe: it should have the following properties:
         - Each row describes a single object
@@ -30,7 +31,7 @@ So... that's what we'll do!
 """;
 
 # %% Load Data
-df_student = pd.read_csv("data/Student_Performance.csv")
+df_student = pd.read_csv("../data/Student_Performance.csv")
 
 # %% 1) Build the Data Frame
 # Basic Overview
@@ -90,7 +91,7 @@ Looks like the distribution of hours studied is roughly the same count across al
 # Let's now check if there is any linear relationship when using a scatter plot.
 plt.figure()
 sns.boxplot(
-    data=df_student, x=df_student["Hours Studied"], y=df_student["Performance Index"]
+    data=df_student, x="Hours Studied", y="Performance Index"
 )
 plt.show();
 """
@@ -106,7 +107,7 @@ that the spread of scores based on hours of study is also pretty even
 # Now let's get an idea of the distribution density using a violin plot
 plt.figure()
 sns.violinplot(
-    data=df_student, x=df_student["Hours Studied"], y=df_student["Performance Index"]
+    data=df_student, x=df_student["Hours Studied"], y=df_student["Performance Index"], split=True
 )
 plt.show();
 
@@ -128,6 +129,7 @@ plt.show();
 Seems to be consistent with the histograms. Also worth noting that both 1 hour
 of study and 9 hours of study have greater differences between the lowest and
 highest performers relative to the rest of the study hour sets.
+This was also shown in the violin plot as well.
 """;
 
 """SLEEP VS. PERFORMANCE""";
@@ -142,4 +144,11 @@ plt.ylabel("Student Count")
 plt.hist(df_student["Sleep Hours"], bins=6);
 """
 Same story as before. We got a pretty even distribution here as well.
+""";
+
+# %% Sleep vs. Performance Box Plot
+plt.figure()
+sns.boxplot(data=df_student, x="Sleep Hours", y="Performance Index")
+"""
+
 """;
