@@ -162,6 +162,14 @@ but I don't think this is indicative of any trend as of now.
 # First, we'll need to split the data and make a multiple linear regression model
 train_data, test_data = train_test_split(df_student, test_size=0.2, random_state=42)
 print("Train data shape: ", train_data.shape)
-print("Test data shape: ", test_data.shape)
+print("Test data shape: ", test_data.shape, "\n")
 
 sleep_study_model = LinearRegression()
+sleep_study_model.fit(X_train, y_train)
+
+predictions = sleep_study_model.predict(X_test)
+
+print(
+    "Mean Squared Error: ", mean_squared_error(y_test, predictions), "\n"
+    "Mean Absolute Error: ", mean_absolute_error(y_test, predictions), "\n"
+)
