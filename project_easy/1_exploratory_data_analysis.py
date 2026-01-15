@@ -1,6 +1,8 @@
 # %% Imports and options
 # Data Source: https://www.kaggle.com/datasets/nikhil7280/student-performance-multiple-linear-regression/data
 import pandas as pd
+import numpy as np
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -157,4 +159,15 @@ but I don't think this is indicative of any trend as of now.
 """;
 
 # %% Visualize and test a potential relationship of both sleep and study on performance
-# First, we'll need to make a multiple linear regression model
+# First, we'll need to split the data and make a multiple linear regression model
+train_data, test_data = train_test_split(df_student, test_size=0.2, random_state=42)
+print("Train data shape: ", train_data.shape)
+print("Test data shape: ", test_data.shape)
+
+X_train = train_data[["Hours Studied", "Sleep Hours"]]
+y_train = train_data["Performance Index"]
+
+X_test = test_data[["Hours Studied", "Sleep Hours"]]
+y_test = test_data["Performance Index"]
+
+sleep_study_model = LinearRegression()
