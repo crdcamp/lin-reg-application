@@ -164,10 +164,4 @@ train_data, test_data = train_test_split(df_student, test_size=0.2, random_state
 print("Train data shape: ", train_data.shape)
 print("Test data shape: ", test_data.shape)
 
-X_train = train_data[["Hours Studied", "Sleep Hours"]]
-y_train = train_data["Performance Index"]
-
-X_test = test_data[["Hours Studied", "Sleep Hours"]]
-y_test = test_data["Performance Index"]
-
 sleep_study_model = LinearRegression()
