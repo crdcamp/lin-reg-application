@@ -40,6 +40,8 @@ print("Shape: ", df_student.shape, "\n")
 print("Description:\n", df_student.describe(), "\n")
 print("Data Types:\n", df_student.dtypes, "\n")
 print("Null Values:\n", df_student.isnull().sum())
+# Let's change `Extracurricular Activities` to bool
+
 
 # %% 2) Clean the Data Frame
 """
@@ -79,12 +81,11 @@ print("Min hours of study: ", df_student["Hours Studied"].min())
 
 # Plot to visualize distributions for hours of study
 plt.figure()
-plt.xlabel("Hours of Study")
-plt.ylabel("Student Count")
-plt.hist(df_student["Hours Studied"], bins=9)
+sns.countplot(data=df_student, x="Hours Studied", order=df_student["Hours Studied"].value_counts().index)
 plt.show();
 """
 Looks like the distribution of hours studied is roughly the same count across all hours.
+However, it's worth noting that most students studied one hour (kinda surprising).
 """;
 
 # %% Hours Studied vs. Performance Box Plot
@@ -139,11 +140,11 @@ print("Max hours of sleep: ", df_student["Sleep Hours"].max())
 print("Min hours of sleep: ", df_student["Sleep Hours"].min(), "\n")
 
 plt.figure()
-plt.xlabel("Hours of Sleep")
-plt.ylabel("Student Count")
-plt.hist(df_student["Sleep Hours"], bins=6);
+sns.countplot(data=df_student, x="Sleep Hours", order=df_student["Sleep Hours"].value_counts().index)
+plt.show();
 """
-Same story as before. We got a pretty even distribution here as well.
+Same story as before. We got a pretty even distribution here as well. However,
+most students slept 8 hours.
 """;
 
 # %% Sleep vs. Performance Box Plot
@@ -171,5 +172,5 @@ plt.figure()
 sns.regplot(data=df_student, x="Sleep Hours", y="Performance Index")
 plt.show();
 """
-Yep. There doesn't seem to be any real usable trend here.
+I still don't feel that the regplots really tell us anything, but oh well!
 """
