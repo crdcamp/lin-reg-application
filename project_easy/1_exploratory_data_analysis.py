@@ -164,8 +164,12 @@ but I don't think this is indicative of any trend as of now.
 # First, we'll need to split the data and make a multiple linear regression model
 train_data, test_data = train_test_split(df_student, test_size=0.2, random_state=42)
 
-X_train = train_data[["Hours Studied", "Sleep Hours"]]
-y_train = train_data["Performance Index"]
+X_train, X_test = train_data[["Hours Studied", "Sleep Hours"]], test_data[["Hours Studied", "Sleep Hours"]]
+y_train, y_test = train_data["Performance Index"], test_data["Performance Index"]
 
-X_test = test_data[["Hours Studied", "Sleep Hours"]]
-y_test = test_data["Performance Index"]
+print("X_train and y_train shape:", X_train.shape, y_train.shape)
+
+study_sleep_model = LinearRegression()
+study_sleep_model.fit(X_train, y_train)
+
+sleep_study_predictions = study_sleep_model.predict(X_test)
