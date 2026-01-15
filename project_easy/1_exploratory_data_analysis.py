@@ -149,6 +149,27 @@ Same story as before. We got a pretty even distribution here as well.
 # %% Sleep vs. Performance Box Plot
 plt.figure()
 sns.boxplot(data=df_student, x="Sleep Hours", y="Performance Index")
+plt.show();
 """
-
+Judging by initial impressions from this boxplot, it seems that sleep probably
+doesn't have as much of an effect on performance as hours of study.
 """;
+
+# %% Sleep vs. Performance Violin Plot
+plt.figure()
+sns.violinplot(data=df_student, x="Sleep Hours", y="Performance Index", split=True)
+plt.show();
+"""
+Again, not seeing much of a trend here. There may be some minor
+implications for 4 hours of sleep (People either get 40% or 70%),
+but I don't think this is indicative of any trend as of now.
+""";
+
+# %% Sleep vs. Performance Scatter Plot
+
+plt.figure()
+sns.regplot(data=df_student, x="Sleep Hours", y="Performance Index")
+plt.show();
+"""
+Yep. There doesn't seem to be any real usable trend here.
+"""
