@@ -4,6 +4,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error, mean_absolute_error
+from sklearn import preprocessing
+
 plt.style.use('dark_background')
 #pd.set_option("display.width", 800)
 """
@@ -27,13 +32,13 @@ rubric for exploratory data analysis:
     4) Explore group properties. Use `groupby` and small multiples to
        compare subsets of the data.
 
-So... that's what we'll do!
+So... that's what we'll do! (Where applicable)
 """;
 
 # %% Load Data
 df_student = pd.read_csv("../data/Student_Performance.csv")
 
-# %% 1) Build the Data Frame
+# %% 1) Build the Data Frame (Replacing this with some introductory investigation)
 # Basic Overview
 print("Overview:\n", df_student.head(), "\n")
 print("Shape: ", df_student.shape, "\n")
@@ -56,7 +61,7 @@ aggregation functions to summarize the data.
 """;
 
 """
-Initial data exploration:
+INITIAL DATA EXPLORATION:
 
 1) Visualize and test a potential relationship between hours of study and performance.
 
@@ -118,21 +123,6 @@ With my limited knowledge, I believe this further reinforces that hours studied 
 strong predictor for performance
 """;
 
-# %% Hours Studied vs. Performance Scatter Plot
-# Then let's throw in a scatterplot just to see what happens (I think the box and violin plots already tell us enough though,
-# and I don't believe a scatterplot applies to the categorical nature of the hours anyway).
-plt.figure()
-hours_sorted = df_student["Hours Studied"].sort_values()
-performance_sorted = df_student["Performance Index"].sort_values()
-sns.regplot(data=df_student, x=hours_sorted, y=performance_sorted)
-plt.show();
-"""
-Seems to be consistent with the histograms. Also worth noting that both 1 hour
-of study and 9 hours of study have greater differences between the lowest and
-highest performers relative to the rest of the study hour sets.
-This was also shown in the violin plot as well.
-""";
-
 """SLEEP VS. PERFORMANCE""";
 # %% Sleep vs. Performance Histogram
 print("Range of sleep hours: ", df_student["Sleep Hours"].max() - df_student["Sleep Hours"].min())
@@ -166,11 +156,5 @@ implications for 4 hours of sleep (People either get 40% or 70%),
 but I don't think this is indicative of any trend as of now.
 """;
 
-# %% Sleep vs. Performance Scatter Plot
-
-plt.figure()
-sns.regplot(data=df_student, x="Sleep Hours", y="Performance Index")
-plt.show();
-"""
-I still don't feel that the regplots really tell us anything, but oh well!
-"""
+# %% Visualize and test a potential relationship of both sleep and study on performance
+# First, we'll need to make a multiple linear regression model
