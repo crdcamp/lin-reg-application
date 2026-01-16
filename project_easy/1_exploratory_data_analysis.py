@@ -172,8 +172,21 @@ print("X_train and y_train shape:", X_train.shape, y_train.shape)
 study_sleep_model = LinearRegression()
 study_sleep_model.fit(X_train, y_train)
 
-sleep_study_predictions = study_sleep_model.predict(X_test)
+study_sleep_predictions = study_sleep_model.predict(X_test)
 
 print("Mean Squared Error", mean_squared_error(y_test, sleep_study_predictions))
 print("Mean Absolute Error", mean_absolute_error(y_test, sleep_study_predictions))
 print("R2 score", r2_score(y_test, sleep_study_predictions))
+
+# %% Predicted vs. Actual Residual Plot
+residuals = y_test - study_sleep_predictions
+
+plt.figure()
+plt.scatter(study_sleep_predictions, residuals)
+plt.show();
+"""
+Well this doesn't tell us much! Between the high error values and the insanely low
+r2 value, it's pretty easy to conclude that using only sleep and studies as
+features isn't nearly enough to explain even a little bit of the variation in
+the data.
+""";
