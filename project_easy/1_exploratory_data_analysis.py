@@ -69,7 +69,7 @@ INITIAL DATA EXPLORATION:
 
 2) Visualize and test a potential relationship of sleep on performance.
 
-3) Visualize and test a potential relationship of both sleep and study on performance.
+3) (For fun/practice) Test your hypothesis: Visualize and test a potential relationship of both sleep and study on performance.
 
 4) Visualize all the data to explore other potential correlations and relationships
 
@@ -190,3 +190,5 @@ r2 value, it's pretty easy to conclude that using only sleep and studies as
 features isn't nearly enough to explain even a little bit of the variation in
 the data.
 """;
+
+"""VISUALIZE THE REST OF DATA AND OTHER POTENTIAL PREDICTORS"""
