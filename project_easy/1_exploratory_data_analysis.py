@@ -12,7 +12,11 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 from sklearn import preprocessing
 
 plt.style.use('dark_background')
-#pd.set_option("display.width", 800)
+
+pd.set_option('display.max_rows', None)        # show all rows, not just first/last 5
+pd.set_option('display.max_columns', None)     # show all columns
+pd.set_option('display.width', None)           # don't wrap to fit terminal width
+pd.set_option('display.max_colwidth', None)
 """
 ====================================================================================================
 EXPLORATORY DATA ANALYSIS
@@ -171,15 +175,15 @@ sleep_study_predictions = study_sleep_model.predict(X_test)
 
 print("Mean Squared Error", mean_squared_error(y_test, sleep_study_predictions))
 print("Mean Absolute Error", mean_absolute_error(y_test, sleep_study_predictions))
-print("R2 score", r2_score(y_test, study_sleep_predictions))
+print("R2 score", r2_score(y_test, sleep_study_predictions))
 
 # %% Predicted vs. Actual Residual Plot
-residuals = y_test - study_sleep_predictions
+residuals = y_test - sleep_study_predictions
 
 plt.figure()
 plt.xlabel("Predictions")
 plt.ylabel("Actual Values")
-plt.scatter(study_sleep_predictions, residuals)
+plt.scatter(sleep_study_predictions, residuals)
 plt.show();
 """
 Well this doesn't tell us much! Between the high error values and the insanely low
@@ -202,11 +206,43 @@ print("Correlation between Performance Index and Previous Scores:\n", np.corrcoe
 """Given the graph, correlation matrix, and kinda just common sense, there is clearly a relationship between
 students' Performance Index and their previous scores
 """;
-## % Correlation Matrix
+# %% Correlation Matrix
 """Now it's time to make a correlation matrix to find other correlations that may have not been considered
 First, we have to convert the `Extracurricular Activities` categorical variable into something we can
 actually calculate. Enter one-hot-encoding.
 
 We'll use a previous example as reference for how to properly do this and also take notes for review.
 
-Here's the resource for doing so: https://harvard-iacs.github.io/2018-CS109A/labs/lab-4/solutions/#Part-2.3:-Turning-Categorical-Variables-into-multiple-binary-variables"""
+Here's the resource for doing so: https://harvard-iacs.github.io/2018-CS109A/labs/lab-4/solutions/#Part-2.3:-Turning-Categorical-Variables-into-multiple-binary-variables""";
+
+"""One important thing to keep in mind is this (in the instance of `drop_first=True`):
+
+    Think of it like a coin flip (since we're only dealing with binary values here).
+    You have a feature called `is_head`. You don't need another feature called `is_tail`
+    because you already know it via `is_head=False`.
+
+    Essentially (in the case of binary categories at least) one value implicates the other,
+    so providing both values is unnecessary.
+
+    This is important because more dummy features make it harder for the algorithm to
+    fit or (even worse) overfit the data.
+
+    Here's another example:
+
+    Suppose, you have a column for gender that contains 4 variables- "Male", "Female", "Other", "Unknown".
+    So a person is either "Male", or "Female", or "Other". If they are not either of these 3, their gender is "Unknown".
+
+    In the instance we do not drop the first column:
+
+    Suppose we have 5 unique values in a column called "Fav_genre" - "Rock", "Hip hop", "Pop", "Metal", "Country".
+    In this case, `drop_first=True` is not applicable. A person may have more than one
+    favorite genre. Moreover, having preference over one of these genres does not implicate the others.
+
+    So, you would include all columns in an instance like this.
+
+    We'll explore more complicated instances when we encounter them in the more challenging problem.
+    """;
+
+df_student_encoded = pd.get_dummies(df_student, columns=["Extracurricular Activities"], drop_first=True)
+print("ORIGINAL DF\n", df_student.head(3), "\n\n")
+print("ENCODED DF\n", df_student_encoded.head(3))
