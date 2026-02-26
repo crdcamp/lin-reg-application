@@ -108,9 +108,6 @@ plt.show();
 The results indicate that hours studied has a positive impact on performance
 This conclusion is further reinforced by the fact that the distribution of the
 student count and the hours of study is (unrealistically) even.
-
-Moreover, the boxplot spread (is that the correct terminology?) indicates
-that the spread of scores based on hours of study is also pretty even
 """;
 
 # %% Hours Studied vs. Performance Violin Plot
@@ -122,12 +119,10 @@ sns.violinplot(
 plt.show();
 
 """
-Again, the distributions are unusually even (likely due to this being an introductory data set).
-With my limited knowledge, I believe this further reinforces that hours studied might be a
-strong predictor for performance
+The violin plot tells the same story: more hours studied generally results in better test scores. However,
+the concentration of students around the 40% performance index for 9 hours of study is a bit strange.
 """;
 
-"""SLEEP VS. PERFORMANCE""";
 # %% Sleep vs. Performance Histogram
 print("Range of sleep hours: ", df_student["Sleep Hours"].max() - df_student["Sleep Hours"].min())
 print("Max hours of sleep: ", df_student["Sleep Hours"].max())
@@ -172,23 +167,38 @@ print("X_train and y_train shape:", X_train.shape, y_train.shape)
 study_sleep_model = LinearRegression()
 study_sleep_model.fit(X_train, y_train)
 
-study_sleep_predictions = study_sleep_model.predict(X_test)
+sleep_study_predictions = study_sleep_model.predict(X_test)
 
 print("Mean Squared Error", mean_squared_error(y_test, sleep_study_predictions))
 print("Mean Absolute Error", mean_absolute_error(y_test, sleep_study_predictions))
-print("R2 score", r2_score(y_test, sleep_study_predictions))
+print("R2 score", r2_score(y_test, study_sleep_predictions))
 
 # %% Predicted vs. Actual Residual Plot
 residuals = y_test - study_sleep_predictions
 
 plt.figure()
+plt.xlabel("Predictions")
+plt.ylabel("Actual Values")
 plt.scatter(study_sleep_predictions, residuals)
 plt.show();
 """
 Well this doesn't tell us much! Between the high error values and the insanely low
-r2 value, it's pretty easy to conclude that using only sleep and studies as
+r2 value, it's pretty easy to conclude that using only sleep and study hours as
 features isn't nearly enough to explain even a little bit of the variation in
-the data.
+the data. Let's explore the rest of the data then.
 """;
 
-"""VISUALIZE THE REST OF DATA AND OTHER POTENTIAL PREDICTORS"""
+"""VISUALIZE THE REST OF DATA AND OTHER POTENTIAL PREDICTORS""";
+# %% Exploring the rest of the data
+"""EXPLORING THE REST OF THE DATA""";
+# I want to test one final thing before making a correlation plot: a comparison of the performance index and previous scores
+plt.figure()
+plt.xlabel("Performance Index")
+plt.ylabel("Previous Scores")
+plt.scatter(df_student["Performance Index"], df_student["Previous Scores"])
+plt.show()
+
+print("Correlation between Performance Index and Previous Scores:\n", np.corrcoef(df_student["Performance Index"], df_student["Previous Scores"]))
+"""Given the graph, correlation matrix, and kinda just common sense, there is clearly a relationship between
+students' Performance Index and their previous scores
+""";
