@@ -15,9 +15,9 @@ from sklearn import preprocessing
 
 plt.style.use('dark_background')
 
-pd.set_option('display.max_rows', None)        # show all rows, not just first/last 5
-pd.set_option('display.max_columns', None)     # show all columns
-pd.set_option('display.width', None)           # don't wrap to fit terminal width
+pd.set_option('display.max_rows', None)
+pd.set_option('display.max_columns', None)
+pd.set_option('display.width', None)
 pd.set_option('display.max_colwidth', None)
 """
 ====================================================================================================
@@ -260,4 +260,4 @@ sns.heatmap(corr_matrix, annot=True) # `annot=True` shows the correlation values
 As we already know, `Performance Index` is highly correlated with `Previous Scores`.
 Interestingly, there are no other strong correlations to be seen.
 
-I guess it's now time to test a bunch of different models in the next file `2_linear_regression.py"""
+I guess it's now time to test a bunch of different models in the next file `2_linear_regression.py`"""
