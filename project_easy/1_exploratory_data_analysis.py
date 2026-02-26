@@ -4,8 +4,10 @@ import pandas as pd
 import numpy as np
 
 import matplotlib.pyplot as plt
+from pandas.core.internals.construction import Index
 import seaborn as sns
 
+from seaborn.matrix import heatmap
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
@@ -215,7 +217,7 @@ We'll use a previous example as reference for how to properly do this and also t
 
 Here's the resource for doing so: https://harvard-iacs.github.io/2018-CS109A/labs/lab-4/solutions/#Part-2.3:-Turning-Categorical-Variables-into-multiple-binary-variables""";
 
-"""One important thing to keep in mind is this (in the instance of `drop_first=True`):
+"""Some important things to keep in mind (in the instance of `drop_first=True`):
 
     Think of it like a coin flip (since we're only dealing with binary values here).
     You have a feature called `is_head`. You don't need another feature called `is_tail`
@@ -244,5 +246,17 @@ Here's the resource for doing so: https://harvard-iacs.github.io/2018-CS109A/lab
     """;
 
 df_student_encoded = pd.get_dummies(df_student, columns=["Extracurricular Activities"], drop_first=True)
-print("ORIGINAL DF\n", df_student.head(3), "\n\n")
-print("ENCODED DF\n", df_student_encoded.head(3))
+print("Original DF\n", df_student.head(3), "\n\n")
+print("Encoded DF\n", df_student_encoded.head(3),"\n\n")
+
+# Now that we've covered the basics, let's actually make the correlation matrix now
+corr_matrix = df_student_encoded.corr()
+print("Correlation Matrix:\n", corr_matrix)
+
+# And the heatmap as well
+sns.heatmap(corr_matrix, annot=True) # `annot=True` shows the correlation values in the heatmap's boxes
+"""WHAT WE'VE LEARNED FROM THE heatmap
+
+As we already know, `Performance Index` is highly correlated with `Previous Scores`.
+Interestingly, there are no other strong correlations to be seen. Let's now create
+a box plot for all the variables"""
