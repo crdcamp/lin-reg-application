@@ -202,3 +202,11 @@ print("Correlation between Performance Index and Previous Scores:\n", np.corrcoe
 """Given the graph, correlation matrix, and kinda just common sense, there is clearly a relationship between
 students' Performance Index and their previous scores
 """;
+## % Correlation Matrix
+"""Now it's time to make a correlation matrix to find other correlations that may have not been considered
+First, we have to convert the `Extracurricular Activities` categorical variable into something we can
+actually calculate. Enter one-hot-encoding.
+
+We'll use a previous example as reference for how to properly do this and also take notes for review.
+
+Here's the resource for doing so: https://harvard-iacs.github.io/2018-CS109A/labs/lab-4/solutions/#Part-2.3:-Turning-Categorical-Variables-into-multiple-binary-variables"""
