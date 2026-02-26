@@ -258,5 +258,6 @@ sns.heatmap(corr_matrix, annot=True) # `annot=True` shows the correlation values
 """WHAT WE'VE LEARNED FROM THE heatmap
 
 As we already know, `Performance Index` is highly correlated with `Previous Scores`.
-Interestingly, there are no other strong correlations to be seen. Let's now create
-a box plot for all the variables"""
+Interestingly, there are no other strong correlations to be seen.
+
+I guess it's now time to test a bunch of different models in the next file `2_linear_regression.py"""
