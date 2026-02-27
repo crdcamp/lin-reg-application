@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 import statsmodels.api as sm
+from statsmodels.api import OLS
 
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
@@ -27,18 +28,23 @@ X, y = df_student.drop(columns=["Performance Index"]), df_student["Performance I
 print("X shape: ", X.shape)
 print("y shape: ", y.shape, "\n")
 
-# Encode the categorical variable `Extracurricular Activities`
+# Encode the categorical variable `Extracurricular Activities` before train/test split
 X = pd.get_dummies(X, columns=["Extracurricular Activities"], drop_first=True)
 
-# Split into train and test data
+# Split data into train and test sets
 X_train, X_test, y_train, y_test = train_test_split(
     X, y, test_size=0.2, random_state=42
 )
-print("X_train, X_test shape: ", X_train.shape, X_test.shape)
-print("y_train, y_test shape: ", y_train.shape, y_test.shape, "\n")
 
-# Inspect data types before continuing (just in case)
-print("X dtypes:\n", X.dtypes, "\n")
+# Split into train and test data
+for name, var in [("X_train shape: ", X_train),
+    ("X_test shape: ", X_test),
+    ("y_train shape: ", y_train),
+    ("y_test shape: ", y_test)]:
+    print(name, var.shape)
+
+# Inspect data types
+print("\nX dtypes:\n", X.dtypes, "\n")
 print("y dtype:\n", y.dtypes, "\n")
 
 # %% statsmodels Model Creation
@@ -50,4 +56,29 @@ using the statsmodels library.
 
 Then, we'll thoroughly inspect the data with all the tools statsmodels provides in order
 to brush up on interpreting linear regression models.
+
+Before we continue though, let's make all of the previously created variables into numpy data types
+to make statsmodels's extremely inflexible data type handling happy.
+
+We'll assign them separately to avoid confusion later and keep the feature and target variable
+column names for the scikit application.
 """;
+
+X_np = X.astype(float)
+y_np = y.astype(float)
+X_np, y_np = X_np.to_numpy(), y_np.to_numpy()
+
+# Do a separate split for the converted values
+X_np_train, X_np_test, y_np_train, y_np_test = train_test_split(
+    X_np, y_np, test_size=0.2, random_state=42
+)
+
+for name, var in [("X_np_train shape: ", X_np_train),
+    ("X_np_test shape: ", X_np_test),
+    ("y_np_train shape: ", y_np_train),
+    ("y_np_test shape: ", y_np_test)]:
+    print(name, var.shape)
+
+# Add constant because for some reason the creator of statsmodels didn't make this a default behavior
+X_np = sm.add_constant(X_np)
+sm_model = sm.OLS(y_np, X_np)
