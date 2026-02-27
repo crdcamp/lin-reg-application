@@ -78,9 +78,10 @@ for name, var in [("X_np_train shape: ", X_np_train),
     ("y_np_train shape: ", y_np_train),
     ("y_np_test shape: ", y_np_test)]:
     print(name, var.shape)
+print()
 
 # Add constant because for some reason the creator of statsmodels didn't make this a default behavior
-X_np = sm.add_constant(X_np)
-sm_model = sm.OLS(y_np, X_np) # Reminder that statsmodels using Y followed by X
+X_np = sm.add_constant(X_np_train)
+sm_model = sm.OLS(y_np_train, X_np_train) # Reminder that statsmodels using Y followed by X
 sm_results = sm_model.fit()
-print(sm_results.params) # Display the coefficients of the fitted model
+print("Statsmodels model coefficients:\n", sm_results.params, "\n") # Display the coefficients of the fitted model
