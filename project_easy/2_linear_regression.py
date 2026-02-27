@@ -68,6 +68,8 @@ X_np = X.astype(float)
 y_np = y.astype(float)
 X_np, y_np = X_np.to_numpy(), y_np.to_numpy()
 
+X_np = sm.add_constant(X_np)
+
 # Do a separate split for the converted values
 X_np_train, X_np_test, y_np_train, y_np_test = train_test_split(
     X_np, y_np, test_size=0.2, random_state=42
@@ -81,7 +83,6 @@ for name, var in [("X_np_train shape: ", X_np_train),
 print()
 
 # Add constant because for some reason the creator of statsmodels didn't make this a default behavior
-X_np = sm.add_constant(X_np_train)
 sm_model = sm.OLS(y_np_train, X_np_train) # Reminder that statsmodels using Y followed by X
 sm_results = sm_model.fit()
 print("Statsmodels model coefficients:\n", sm_results.params, "\n") # Display the coefficients of the fitted model
