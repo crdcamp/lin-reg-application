@@ -98,6 +98,8 @@ print(sm_results.summary(), "\n")
 print("R^2 Score (Training): ", metrics.r2_score(y_np_train, sm_results.predict(X_np_train)))
 print("R^2 Score (Testing): ", metrics.r2_score(y_np_test, sm_results.predict(X_np_test)), "\n")
 
+# Note: Will use sklearn MSE import later in the code
+
 # Training data squared error and mean squared error
 sm_model_train_pred = sm_results.predict(X_np_train)
 sm_model_train_se = (sm_model_train_pred - y_np_train)**2
@@ -109,7 +111,6 @@ sm_model_test_pred = sm_results.predict(X_np_test)
 sm_model_test_se = (sm_model_test_pred - y_np_test)**2
 sm_model_test_mse = sm_model_test_se.mean()
 print("Test Data Mean Squared Error: ", sm_model_test_mse)
-
 # %% Interpreting the results
 """
 Now it's time to interpret these results. HOWEVER, before we do,
@@ -117,3 +118,5 @@ let's type some notes for all these factors we're about to review.
 While the data we're working with here is incredibly simple, we also
 have to keep in mind that these will be important in a more advanced application.
 """;
+
+# %% Testing AIC and BIC with different feature combinations (for practice)
