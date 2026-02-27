@@ -8,6 +8,7 @@ import seaborn as sns
 import statsmodels.api as sm
 from statsmodels.api import OLS
 
+from sklearn import metrics
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
@@ -64,8 +65,7 @@ We'll assign them separately to avoid confusion later and keep the feature and t
 column names for the scikit application.
 """;
 
-X_np = X.astype(float)
-y_np = y.astype(float)
+X_np, y_np = X.astype(float), y.astype(float)
 X_np, y_np = X_np.to_numpy(), y_np.to_numpy()
 
 X_np = sm.add_constant(X_np)
@@ -84,8 +84,36 @@ for name, var in [("X_np_train shape: ", X_np_train),
 print()
 
 # Add constant because for some reason the creator of statsmodels didn't make this a default behavior
-sm_model = sm.OLS(y_np_train, X_np_train) # Reminder that statsmodels using Y followed by X
+sm_model = sm.OLS(y_np_train, X_np_train) # Reminder that statsmodels uses Y followed by X
 sm_results = sm_model.fit()
+
+# %% Interpreting statsmodels OLS Results
+# General information
 print("\nSTATSMODELS MODEL RESULTS")
 print("Coefficients:\n", sm_results.params, "\n")
 print(sm_results.summary(), "\n")
+
+# Train vs. test data information
+# Also, who would've thought... the sklearn metrics are compatible with the statsmodels results!
+print("R^2 Score (Training): ", metrics.r2_score(y_np_train, sm_results.predict(X_np_train)))
+print("R^2 Score (Testing): ", metrics.r2_score(y_np_test, sm_results.predict(X_np_test)), "\n")
+
+# Training data squared error and mean squared error
+sm_model_train_pred = sm_results.predict(X_np_train)
+sm_model_train_se = (sm_model_train_pred - y_np_train)**2
+sm_model_train_mse = sm_model_train_se.mean()
+print("Train Data Mean Squared Error: ", sm_model_train_mse)
+
+# Test data squared error and mean squared error
+sm_model_test_pred = sm_results.predict(X_np_test)
+sm_model_test_se = (sm_model_test_pred - y_np_test)**2
+sm_model_test_mse = sm_model_test_se.mean()
+print("Test Data Mean Squared Error: ", sm_model_test_mse)
+
+# %% Interpreting the results
+"""
+Now it's time to interpret these results. HOWEVER, before we do,
+let's type some notes for all these factors we're about to review.
+While the data we're working with here is incredibly simple, we also
+have to keep in mind that these will be important in a more advanced application.
+""";
