@@ -75,6 +75,7 @@ X_np_train, X_np_test, y_np_train, y_np_test = train_test_split(
     X_np, y_np, test_size=0.2, random_state=42
 )
 
+print("Note: X_np variables have a different shape due to the addition of the constant.")
 for name, var in [("X_np_train shape: ", X_np_train),
     ("X_np_test shape: ", X_np_test),
     ("y_np_train shape: ", y_np_train),
@@ -85,4 +86,6 @@ print()
 # Add constant because for some reason the creator of statsmodels didn't make this a default behavior
 sm_model = sm.OLS(y_np_train, X_np_train) # Reminder that statsmodels using Y followed by X
 sm_results = sm_model.fit()
-print("Statsmodels model coefficients:\n", sm_results.params, "\n") # Display the coefficients of the fitted model
+print("\nSTATSMODELS MODEL RESULTS")
+print("Coefficients:\n", sm_results.params, "\n")
+print(sm_results.summary(), "\n")
