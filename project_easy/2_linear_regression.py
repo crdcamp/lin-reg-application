@@ -23,15 +23,17 @@ pd.set_option('display.max_colwidth', None)
 
 # No need for data cleaning since we're working with easy data that doesn't require it
 df_student = pd.read_csv("../data/Student_Performance.csv")
+# Actually... let's remove the white space:
+df_student.columns = df_student.columns.str.replace(' ', '', regex=False)
 
 # %% Data Preparation
 # Split data into the features (independent variables) and target (dependent variable)
-X, y = df_student.drop(columns=["Performance Index"]), df_student["Performance Index"]
+X, y = df_student.drop(columns=["PerformanceIndex"]), df_student["PerformanceIndex"]
 print("X shape: ", X.shape)
 print("y shape: ", y.shape, "\n")
 
-# Encode the categorical variable `Extracurricular Activities` before train/test split
-X = pd.get_dummies(X, columns=["Extracurricular Activities"], drop_first=True)
+# Encode the categorical variable `ExtracurricularActivities` before train/test split
+X = pd.get_dummies(X, columns=["ExtracurricularActivities"], drop_first=True)
 
 # Split data into train and test sets
 X_train, X_test, y_train, y_test = train_test_split(
@@ -114,14 +116,11 @@ print("Test Data Mean Squared Error: ", sm_model_test_mse)
 
 """Also, here's the formula notation that you can use for exploring
 different combinations of features. We will mess around with this
-a bit after exploring `sm_results` results a bit.
+a bit after exploring `sm_results`.
 
 This one uses only Previous Scores, for example:"""
 
 # Need to remove white space so the smf formula will accept the inputs
-df_smf_example = df_student.copy()
-df_smf_example.columns = df_smf_example.columns.str.replace(' ', '', regex=False)
-
 example_formula_model = smf.ols(formula="PerformanceIndex ~ PreviousScores", data=df_smf_example)
 
 # %% Interpreting the results
@@ -130,6 +129,8 @@ Now it's time to interpret these results. HOWEVER, before we do so      ,
 let's type some notes for all these factors we're about to review.
 While the data we're working with here is incredibly simple, we also
 have to keep in mind that these will be important in a more advanced application.
+
+
 """;
 
 # %% Testing AIC and BIC with different feature combinations (for practice)
