@@ -159,9 +159,9 @@ fig, ax = plt.subplots(figsize=(10,6))
 ax.scatter(sm_train_predictions, sm_train_resids)
 ax.axhline(y=0, color='red', linewidth=1)
 
-ax.set_xlabel("Fitted Values")
+ax.set_xlabel("Predicted Values")
 ax.set_ylabel("Residuals")
-ax.set_title("Residual Plot (Training Data")
+ax.set_title("Residual Plot (Training Data)")
 plt.show();
 
 # Test data residual plot
@@ -169,12 +169,26 @@ fig, ax = plt.subplots(figsize=(10,6))
 ax.scatter(sm_train_predictions, sm_train_resids)
 ax.axhline(y=0, color='red', linewidth=1)
 
-ax.set_xlabel("Fitted Values")
+ax.set_xlabel("Predicted Values")
 ax.set_ylabel("Residuals")
 ax.set_title("Residual Plot (Test Data)")
 plt.show();
 """
+Training Data Plot Analysis:
+    It seems that at first glance the data generally lies around an error of plus or minus 2.5
+    on predicting the PerformanceIndex. Let's calculate the mean absolute error to be sure of this
+    before continuing.
+"""
+train_mae = metrics.mean_absolute_error(y_train, sm_train_predictions)
+test_mae = metrics.mean_absolute_error(y_test, sm_test_predictions)
+print("Train MAE: ", train_mae)
+print("Test MAE: ", test_mae)
 
+"""
+    Looks like the train and test MAE values were even lower than I thought after just looking
+    at the graph. Another good sign that the model is doing well.
+
+    Back to
 """
 
 # %% Testing AIC and BIC with different feature combinations (for practice)
