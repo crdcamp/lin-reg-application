@@ -166,7 +166,7 @@ plt.show();
 
 # Test data residual plot
 fig, ax = plt.subplots(figsize=(10,6))
-ax.scatter(sm_train_predictions, sm_train_resids)
+ax.scatter(sm_test_predictions, sm_test_resids)
 ax.axhline(y=0, color='red', linewidth=1)
 
 ax.set_xlabel("Predicted Values")
@@ -188,7 +188,8 @@ print("Test MAE: ", test_mae)
     Looks like the train and test MAE values were even lower than I thought after just looking
     at the graph. Another good sign that the model is doing well.
 
-    Back to
+    Back to analyzing the training data plot. The final consideration I can think of here is
+    the outliers.
 """
 
 # %% Testing AIC and BIC with different feature combinations (for practice)
