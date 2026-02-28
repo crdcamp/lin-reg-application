@@ -115,10 +115,12 @@ print("Test Data Mean Squared Error: ", sm_model_test_mse)
 """Also, here's the formula notation that you can use for exploring
 different combinations of features.
 This one uses only Previous Scores, for example:"""
-df_example = df_student.copy()
-df_example.columns = df_example.columns.str.replace(' ', '', regex=False)
-print(df_example.head())
-example_formula_model = smf.ols(formula="PerformanceIndex ~ PreviousScores", data=df_example)
+
+# Need to remove white space so the smf formula will accept the inputs
+df_smf_example = df_student.copy()
+df_smf_example.columns = df_smf_example.columns.str.replace(' ', '', regex=False)
+
+example_formula_model = smf.ols(formula="PerformanceIndex ~ PreviousScores", data=df_smf_example)
 
 # %% Interpreting the results
 """
