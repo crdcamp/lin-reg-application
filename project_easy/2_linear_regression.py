@@ -24,9 +24,12 @@ pd.set_option('display.max_colwidth', None)
 # matplotlib display options
 plt.style.use('dark_background') # Matches the GitHub theme on my laptop better :)
 
-# Load in data and remove white space
+# Load in data, remove white space, and encode categorical column
 df_student = pd.read_csv("../data/Student_Performance.csv")
 df_student.columns = df_student.columns.str.replace(' ', '', regex=False)
+
+# Encode the categorical variable `ExtracurricularActivities` before train/test split
+df_student = pd.get_dummies(df_student, columns=["ExtracurricularActivities"], drop_first=True) # `drop_first=True` because we're dealing with a simple binary category
 
 
 # %% Data Preparation
@@ -34,9 +37,6 @@ df_student.columns = df_student.columns.str.replace(' ', '', regex=False)
 X, y = df_student.drop(columns=["PerformanceIndex"]), df_student["PerformanceIndex"]
 print("X shape: ", X.shape)
 print("y shape: ", y.shape, "\n")
-
-# Encode the categorical variable `ExtracurricularActivities` before train/test split
-X = pd.get_dummies(X, columns=["ExtracurricularActivities"], drop_first=True) # `drop_first=True` because we're dealing with a simple binary category
 
 # Convert and inspect data types
 X = X.astype(float)
@@ -82,7 +82,6 @@ sm_results = sm_model.fit()
 
 # %% statsmodels OLS Results
 # General information
-print("\nSTATSMODELS MODEL RESULTS")
 print("Coefficients:\n", sm_results.params, "\n")
 print(sm_results.summary(), "\n")
 
@@ -130,8 +129,11 @@ https://www.statsmodels.org/stable/graphics.html#regression-plots
 # I'll just leave them here in case I want to do a deep dive into them
 
 # Influence Plot
-fig, ax = plt.subplots(figsize=(12, 8))
-fig = sm.graphics.influence_plot(sm_results, criterion='cooks', ax=ax)
+print(X_train.columns)
+sm_test_model = ols(" ~ HoursStudied + PreviousScores + SleepHours + SampleQuestionPapersPracticed + ExtracurricularActivities_Yes", data=df_student).fit()
+fig, ax = plt.subplots(figsize=(40, 8))
+fig = sm.graphics.influence_plot(sm_test_model, criterion='cooks', ax=ax)
+fig.tight_layout(pad=1)
 plt.show();
 
 
