@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+import statsmodels
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 from statsmodels.api import OLS
@@ -33,7 +34,7 @@ print("X shape: ", X.shape)
 print("y shape: ", y.shape, "\n")
 
 # Encode the categorical variable `ExtracurricularActivities` before train/test split
-X = pd.get_dummies(X, columns=["ExtracurricularActivities"], drop_first=True)
+X = pd.get_dummies(X, columns=["ExtracurricularActivities"], drop_first=True) # `drop_first=True` because we're dealing with a simple binary category
 X = X.astype(float)
 
 # Ensure data shapes are consistent
@@ -120,12 +121,27 @@ and checking out those results.
 After that, let's type some notes for all these results from the summary we're about to review.
 While the data we're working with here is incredibly simple, we also
 have to keep in mind that these will be important in a more advanced application.
-""";
-# Residuals plot
-fig = plt.figure(figsize=(12, 8))
-fig = sm.graphics.plot_regress_exog(sm_results, 'PreviousScores', fig=fig)
-plt.show()
 
+Here's where you can find all the regression plots for statsmodels:
+https://www.statsmodels.org/stable/graphics.html#regression-plots
+""";
+# From https://www.statology.org/residual-plot-python/
+# Inspect different exogenous (independent) variables
+X_columns = X.columns.drop('const')
+
+# Might use this later on X_columns
+def plot_regress_exog(model_results: object, feature: str):
+    fig = sm.graphics.plot_regress_exog(model_results, feature, fig=fig)
+    plt.show();
+
+def plot_regress_fit(model_results: object, feature: str):
+    fig = statsmodels.graphics.regressionplots.plot_fit(model_results, feature)
+    plt.show();
+
+for col in X_columns:
+    plot_regress_fit(sm_results, col)
+
+plt.show()
 # Actual vs. predicted plot
 
 # %% Interpreting the Summary Results
