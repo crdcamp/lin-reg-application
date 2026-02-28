@@ -84,11 +84,6 @@ sm_model = sm.OLS(y_train, X_train).fit() # Reminder that statsmodels uses y fol
 print("Coefficients:\n", sm_model.params, "\n")
 print(sm_model.summary(), "\n")
 
-# Train vs. test data information
-# Also, who would've thought... the sklearn metrics are compatible with the statsmodels results!
-print("R^2 Score (Training): ", metrics.r2_score(y_train, sm_model.predict(X_train)))
-print("R^2 Score (Testing): ", metrics.r2_score(y_test, sm_model.predict(X_test)), "\n")
-
 # Note: Will use sklearn MSE import later in the code
 # Training data squared error and mean squared error
 sm_train_pred = sm_model.predict(X_train)
@@ -110,27 +105,50 @@ This one uses only PreviousScores, for example:"""
 example_formula_model = smf.ols(formula="PerformanceIndex ~ PreviousScores", data=df_student)
 example_formula_model_results = example_formula_model.fit()
 
-
-# %% Plot statsmodels results
+# %% R-squared
 """
-Now it's time to interpret these results. We'll begin by graphing them
-and checking out those results.
-
-After that, let's type some notes for all these results from the summary we're about to review.
-While the data we're working with here is incredibly simple, we also
-have to keep in mind that these will be important in a more advanced application.
+Now it's time to interpret these results. We'll begin by following this guide: https://medium.com/swlh/interpreting-linear-regression-through-statsmodels-summary-4796d359035a
+in order to get a basic introduction on how to interpret the results.
 
 Here's where you can find all the regression plots for statsmodels:
 https://www.statsmodels.org/stable/graphics.html#regression-plots
 """;
+"""
+From https://statisticsbyjim.com/regression/interpret-r-squared-regression/
 
-# I'll start by making functions for each statsmodels graphics plot option
-# I'll just leave them here in case I want to do a deep dive into them
+R-Squared indicated the percentage of the variance in the dependent variable
+that the independent variables explain collectively. It measures the strength
+of the relationship between your model and the dependent variable.
 
-# Influence Plot
+R-squared evaluates the scatter of the data points around the fitted
+regression line. It's also called the coefficient of determination, or
+the coefficient of multiple determination for multiple regression.
+
+For the same data set, higher R-squared values represent smaller
+differences between the observed data and the fitted values.
+
+Limitations:
+You cannot use R-squared to determine whether the coefficient estimates and
+predictions are biased, which is why you must assess the residual plots.
+
+R-squared does not indicate if a regression model provides an adequate fit
+to your data. A good model can have a low R-squared value. On the other hand,
+a biased model can have a high R-squared value.
 
 
-# %% Interpreting the Summary Results
+"""
+sm_train_r2 = metrics.r2_score(y_train, sm_model.predict(X_train))
+sm_test_r2 = metrics.r2_score(y_test, sm_model.predict(X_test))
+print("R^2 Score (Training): ", sm_train_r2)
+print("R^2 Score (Testing): ", sm_test_r2, "\n")
+
+"""
+Given the high R-squared values, we have some good first impressions on the
+model, yet we should investigate further before making any conclusions.
+
+The above article recommends residual plots for initial further exploration.
+So... that's what we'll do
+""";
 
 
 # %% Testing AIC and BIC with different feature combinations (for practice)
