@@ -113,7 +113,7 @@ plt.show();
 """
 The results indicate that hours studied has a positive impact on performance
 This conclusion is further reinforced by the fact that the distribution of the
-student count and the hours of study is (unrealistically) even.
+student count and the hours of study above is (unrealistically) even.
 """;
 
 # %% Hours Studied vs. Performance Violin Plot

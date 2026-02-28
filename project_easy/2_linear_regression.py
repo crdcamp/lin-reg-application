@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 import statsmodels.api as sm
+import statsmodels.formula.api as smf
 from statsmodels.api import OLS
 
 from sklearn import metrics
@@ -83,7 +84,6 @@ for name, var in [("X_np_train shape: ", X_np_train),
     print(name, var.shape)
 print()
 
-# Add constant because for some reason the creator of statsmodels didn't make this a default behavior
 sm_model = sm.OLS(y_np_train, X_np_train) # Reminder that statsmodels uses Y followed by X
 sm_results = sm_model.fit()
 
@@ -111,9 +111,18 @@ sm_model_test_pred = sm_results.predict(X_np_test)
 sm_model_test_se = (sm_model_test_pred - y_np_test)**2
 sm_model_test_mse = sm_model_test_se.mean()
 print("Test Data Mean Squared Error: ", sm_model_test_mse)
+
+"""Also, here's the formula notation that you can use for exploring
+different combinations of features.
+This one uses only Previous Scores, for example:"""
+df_example = df_student.copy()
+df_example.columns = df_example.columns.str.replace(' ', '', regex=False)
+print(df_example.head())
+example_formula_model = smf.ols(formula="PerformanceIndex ~ PreviousScores", data=df_example)
+
 # %% Interpreting the results
 """
-Now it's time to interpret these results. HOWEVER, before we do,
+Now it's time to interpret these results. HOWEVER, before we do so      ,
 let's type some notes for all these factors we're about to review.
 While the data we're working with here is incredibly simple, we also
 have to keep in mind that these will be important in a more advanced application.
