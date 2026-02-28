@@ -95,7 +95,7 @@ print("Train Data Mean Squared Error: ", sm_train_mse)
 sm_test_pred = sm_model.predict(X_test)
 sm_test_se = (sm_test_pred - y_test)**2
 sm_test_mse = sm_test_se.mean()
-print("Test Data Mean Squared Error: ", sm_test_mse)
+print("Test Data Mean Squared Error: ", sm_test_mse, "\n")
 
 """Also, here's the formula notation that you can use for exploring
 different combinations of features. We will mess around with this
@@ -104,7 +104,6 @@ a bit after exploring `sm_model`.
 This one uses only PreviousScores, for example:"""
 example_formula_model = smf.ols(formula="PerformanceIndex ~ PreviousScores", data=df_student)
 example_formula_model_results = example_formula_model.fit()
-
 # %% R-squared and residual plot
 """
 Now it's time to interpret these results. We'll begin by following this guide: https://medium.com/swlh/interpreting-linear-regression-through-statsmodels-summary-4796d359035a
@@ -179,17 +178,26 @@ Training Data Plot Analysis:
     on predicting the PerformanceIndex. Let's calculate the mean absolute error to be sure of this
     before continuing.
 """
-train_mae = metrics.mean_absolute_error(y_train, sm_train_predictions)
-test_mae = metrics.mean_absolute_error(y_test, sm_test_predictions)
-print("Train MAE: ", train_mae)
-print("Test MAE: ", test_mae)
+sm_train_mae = metrics.mean_absolute_error(y_train, sm_train_predictions)
+sm_test_mae = metrics.mean_absolute_error(y_test, sm_test_predictions)
+print("\nTrain MAE: ", sm_train_mae)
+print("Test MAE: ", sm_test_mae)
+
+# Let's also take a look at root MSE to see if there's any notable difference.
+train_root_mse = np.sqrt(sm_train_mse)
+test_root_mse = np.sqrt(sm_test_mse)
+print("\nTrain Root MSE: ", train_root_mse)
+print("Test Root MSE: ", test_root_mse)
 
 """
     Looks like the train and test MAE values were even lower than I thought after just looking
-    at the graph. Another good sign that the model is doing well.
+    at the graph. Another good sign that the model is doing well. Also, the root MSE values are
+    also lower than my initial expectations based on the graph.
 
     Back to analyzing the training data plot. The final consideration I can think of here is
-    the outliers.
-"""
+    the outliers. There doesn't seem to be any patterns indicating that the outliers are
+    concentrated in any notable way. I feel like there's definitely a way to statistically
+    confirm this, however.
+""";
 
 # %% Testing AIC and BIC with different feature combinations (for practice)
