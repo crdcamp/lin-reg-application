@@ -41,7 +41,7 @@ X = pd.get_dummies(X, columns=["ExtracurricularActivities"], drop_first=True) # 
 # Convert and inspect data types
 X = X.astype(float)
 print("\nX dtypes:\n", X.dtypes, "\n")
-print("y dtype:\n", y.dtypes, "\n")
+print("y dtype: ", y.dtypes, "\n")
 
 
 # %% statsmodels Model Creation
@@ -76,7 +76,7 @@ X_train, X_test = sm.add_constant(X_train), sm.add_constant(X_test)
 print("X_train shape after constant: ", X_train.shape)
 print("X_test shape after constant: ", X_test.shape)
 
-sm_model = sm.OLS(y_train, X_train) # Reminder that statsmodels uses Y followed by X
+sm_model = sm.OLS(y_train, X_train) # Reminder that statsmodels uses y followed by X
 sm_results = sm_model.fit()
 
 
@@ -92,18 +92,17 @@ print("R^2 Score (Training): ", metrics.r2_score(y_train, sm_results.predict(X_t
 print("R^2 Score (Testing): ", metrics.r2_score(y_test, sm_results.predict(X_test)), "\n")
 
 # Note: Will use sklearn MSE import later in the code
-
 # Training data squared error and mean squared error
-sm_model_train_pred = sm_results.predict(X_train)
-sm_model_train_se = (sm_model_train_pred - y_train)**2
-sm_model_train_mse = sm_model_train_se.mean()
-print("Train Data Mean Squared Error: ", sm_model_train_mse)
+sm_train_pred = sm_results.predict(X_train)
+sm_train_se = (sm_train_pred - y_train)**2
+sm_train_mse = sm_train_se.mean()
+print("Train Data Mean Squared Error: ", sm_train_mse)
 
 # Test data squared error and mean squared error
-sm_model_test_pred = sm_results.predict(X_test)
-sm_model_test_se = (sm_model_test_pred - y_test)**2
-sm_model_test_mse = sm_model_test_se.mean()
-print("Test Data Mean Squared Error: ", sm_model_test_mse)
+sm_test_pred = sm_results.predict(X_test)
+sm_test_se = (sm_test_pred - y_test)**2
+sm_test_mse = sm_test_se.mean()
+print("Test Data Mean Squared Error: ", sm_test_mse)
 
 """Also, here's the formula notation that you can use for exploring
 different combinations of features. We will mess around with this
@@ -129,9 +128,6 @@ https://www.statsmodels.org/stable/graphics.html#regression-plots
 
 # I'll start by making functions for each statsmodels graphics plot option
 # I'll just leave them here in case I want to do a deep dive into them
-
-# Use this list for function calls
-X_columns = X.columns.drop('const')
 
 # Influence Plot
 fig, ax = plt.subplots(figsize=(12, 8))
