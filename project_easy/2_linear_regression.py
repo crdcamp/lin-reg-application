@@ -105,18 +105,17 @@ This one uses only PreviousScores, for example:"""
 example_formula_model = smf.ols(formula="PerformanceIndex ~ PreviousScores", data=df_student)
 example_formula_model_results = example_formula_model.fit()
 
-# %% R-squared
+# %% R-squared and residual plot
 """
 Now it's time to interpret these results. We'll begin by following this guide: https://medium.com/swlh/interpreting-linear-regression-through-statsmodels-summary-4796d359035a
 in order to get a basic introduction on how to interpret the results.
 
 Here's where you can find all the regression plots for statsmodels:
 https://www.statsmodels.org/stable/graphics.html#regression-plots
-""";
-"""
+
 From https://statisticsbyjim.com/regression/interpret-r-squared-regression/
 
-R-Squared indicated the percentage of the variance in the dependent variable
+'R-Squared indicated the percentage of the variance in the dependent variable
 that the independent variables explain collectively. It measures the strength
 of the relationship between your model and the dependent variable.
 
@@ -133,9 +132,7 @@ predictions are biased, which is why you must assess the residual plots.
 
 R-squared does not indicate if a regression model provides an adequate fit
 to your data. A good model can have a low R-squared value. On the other hand,
-a biased model can have a high R-squared value.
-
-
+a biased model can have a high R-squared value.'
 """
 sm_train_r2 = metrics.r2_score(y_train, sm_model.predict(X_train))
 sm_test_r2 = metrics.r2_score(y_test, sm_model.predict(X_test))
@@ -149,6 +146,35 @@ model, yet we should investigate further before making any conclusions.
 The above article recommends residual plots for initial further exploration.
 So... that's what we'll do
 """;
+# Get train and test model predictions
+sm_train_predictions = sm_model.predict(X_train)
+sm_test_predictions = sm_model.predict(X_test)
 
+# Calculate train and test residuals
+sm_train_resids = y_train - sm_train_predictions
+sm_test_resids = y_test - sm_test_predictions
+
+# Train data residual plot
+fig, ax = plt.subplots(figsize=(10,6))
+ax.scatter(sm_train_predictions, sm_train_resids)
+ax.axhline(y=0, color='red', linewidth=1)
+
+ax.set_xlabel("Fitted Values")
+ax.set_ylabel("Residuals")
+ax.set_title("Residual Plot (Training Data")
+plt.show();
+
+# Test data residual plot
+fig, ax = plt.subplots(figsize=(10,6))
+ax.scatter(sm_train_predictions, sm_train_resids)
+ax.axhline(y=0, color='red', linewidth=1)
+
+ax.set_xlabel("Fitted Values")
+ax.set_ylabel("Residuals")
+ax.set_title("Residual Plot (Test Data)")
+plt.show();
+"""
+
+"""
 
 # %% Testing AIC and BIC with different feature combinations (for practice)
