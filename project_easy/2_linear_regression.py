@@ -76,36 +76,35 @@ X_train, X_test = sm.add_constant(X_train), sm.add_constant(X_test)
 print("X_train shape after constant: ", X_train.shape)
 print("X_test shape after constant: ", X_test.shape)
 
-sm_model = sm.OLS(y_train, X_train) # Reminder that statsmodels uses y followed by X
-sm_results = sm_model.fit()
+sm_model = sm.OLS(y_train, X_train).fit() # Reminder that statsmodels uses y followed by X
 
 
 # %% statsmodels OLS Results
 # General information
-print("Coefficients:\n", sm_results.params, "\n")
-print(sm_results.summary(), "\n")
+print("Coefficients:\n", sm_model.params, "\n")
+print(sm_model.summary(), "\n")
 
 # Train vs. test data information
 # Also, who would've thought... the sklearn metrics are compatible with the statsmodels results!
-print("R^2 Score (Training): ", metrics.r2_score(y_train, sm_results.predict(X_train)))
-print("R^2 Score (Testing): ", metrics.r2_score(y_test, sm_results.predict(X_test)), "\n")
+print("R^2 Score (Training): ", metrics.r2_score(y_train, sm_model.predict(X_train)))
+print("R^2 Score (Testing): ", metrics.r2_score(y_test, sm_model.predict(X_test)), "\n")
 
 # Note: Will use sklearn MSE import later in the code
 # Training data squared error and mean squared error
-sm_train_pred = sm_results.predict(X_train)
+sm_train_pred = sm_model.predict(X_train)
 sm_train_se = (sm_train_pred - y_train)**2
 sm_train_mse = sm_train_se.mean()
 print("Train Data Mean Squared Error: ", sm_train_mse)
 
 # Test data squared error and mean squared error
-sm_test_pred = sm_results.predict(X_test)
+sm_test_pred = sm_model.predict(X_test)
 sm_test_se = (sm_test_pred - y_test)**2
 sm_test_mse = sm_test_se.mean()
 print("Test Data Mean Squared Error: ", sm_test_mse)
 
 """Also, here's the formula notation that you can use for exploring
 different combinations of features. We will mess around with this
-a bit after exploring `sm_results`.
+a bit after exploring `sm_model`.
 
 This one uses only PreviousScores, for example:"""
 example_formula_model = smf.ols(formula="PerformanceIndex ~ PreviousScores", data=df_student)
@@ -129,12 +128,6 @@ https://www.statsmodels.org/stable/graphics.html#regression-plots
 # I'll just leave them here in case I want to do a deep dive into them
 
 # Influence Plot
-print(X_train.columns)
-sm_test_model = ols(" ~ HoursStudied + PreviousScores + SleepHours + SampleQuestionPapersPracticed + ExtracurricularActivities_Yes", data=df_student).fit()
-fig, ax = plt.subplots(figsize=(40, 8))
-fig = sm.graphics.influence_plot(sm_test_model, criterion='cooks', ax=ax)
-fig.tight_layout(pad=1)
-plt.show();
 
 
 # %% Interpreting the Summary Results
