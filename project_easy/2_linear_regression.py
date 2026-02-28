@@ -113,7 +113,9 @@ sm_model_test_mse = sm_model_test_se.mean()
 print("Test Data Mean Squared Error: ", sm_model_test_mse)
 
 """Also, here's the formula notation that you can use for exploring
-different combinations of features.
+different combinations of features. We will mess around with this
+a bit after exploring `sm_results` results a bit.
+
 This one uses only Previous Scores, for example:"""
 
 # Need to remove white space so the smf formula will accept the inputs
