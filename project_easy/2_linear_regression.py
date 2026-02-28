@@ -118,19 +118,20 @@ print("Test Data Mean Squared Error: ", sm_model_test_mse)
 different combinations of features. We will mess around with this
 a bit after exploring `sm_results`.
 
-This one uses only Previous Scores, for example:"""
+This one uses only PreviousScores, for example:"""
+example_formula_model = smf.ols(formula="PerformanceIndex ~ PreviousScores", data=df_student)
+example_formula_model_results = example_formula_model.fit()
 
-# Need to remove white space so the smf formula will accept the inputs
-example_formula_model = smf.ols(formula="PerformanceIndex ~ PreviousScores", data=df_smf_example)
-
-# %% Interpreting the results
+# %% Plots for Initial Model Results
 """
-Now it's time to interpret these results. HOWEVER, before we do so      ,
-let's type some notes for all these factors we're about to review.
+Now it's time to interpret these results. We'll begin by graphing them
+and checking out those results.
+
+After that, let's type some notes for all these results from the summary we're about to review.
 While the data we're working with here is incredibly simple, we also
 have to keep in mind that these will be important in a more advanced application.
-
-
 """;
+
+# %% Interpreting the Summary Results
 
 # %% Testing AIC and BIC with different feature combinations (for practice)
