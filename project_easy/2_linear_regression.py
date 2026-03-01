@@ -207,18 +207,34 @@ print("X_train shape: ", X_train.shape)
 
 data = X_train.drop('const', axis=1)
 print("data shape :", data.shape)
-print("data:\n", data.head(2), "\n")
+print("data type: ", type(data), "\n")
 
-p = data.count(axis=0)
+train_e = sm_train_resids - sm_train_pred
+print("Train e:\n", train_e.head(4), "\n")
+
+p = len(data.count(axis=0))
 print("p data type: ", type(p))
-print("p: ", p.head(2), "\n")
+print("p (parameters): ", p, "\n")
 
 n = len(data)
 print("n data type: ", type(n))
-print("n: ", n)
+print("n (data points): ", "\n")
+
+print(data.head())
+
+#outliers = 3*(p/n)
+#print("outliers: ", outliers)
+
+def find_outlier(data):
+    p = len(data.columns)
+    n = len(data)
+
+    leverage_lim = 3*(p/n)
+    outliers = data[data > leverage_lim]
+
+
 
 # From https://online.stat.psu.edu/stat501/lesson/11/11.2#paragraph--721
-outliers = 3*(p/n)
 
 # %%
 
