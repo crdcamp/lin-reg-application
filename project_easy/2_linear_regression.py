@@ -201,3 +201,26 @@ print("Test Root MSE: ", test_root_mse)
 """;
 
 # %% Testing AIC and BIC with different feature combinations (for practice)
+
+# %%
+print("X_train shape: ", X_train.shape)
+
+data = X_train.drop('const', axis=1)
+print("data shape :", data.shape)
+print("data:\n", data.head(2), "\n")
+
+p = data.count(axis=0)
+print("p data type: ", type(p))
+print("p: ", p.head(2), "\n")
+
+n = len(data)
+print("n data type: ", type(n))
+print("n: ", n)
+
+# From https://online.stat.psu.edu/stat501/lesson/11/11.2#paragraph--721
+outliers = 3*(p/n)
+
+# %%
+
+# %%
+print(X.head())
