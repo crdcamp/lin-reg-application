@@ -225,18 +225,25 @@ print(data.head())
 #outliers = 3*(p/n)
 #print("outliers: ", outliers)
 
-def find_outlier(data):
+
+# %%
+# Rewrite this in numpy
+def add_outliers_column(data):
     p = len(data.columns)
     n = len(data)
 
+    # I'm doing this wrong
     leverage_lim = 3*(p/n)
-    outliers = data[data > leverage_lim]
+    data["outlier"] = ((data - data.mean()) > leverage_lim).any(axis=1)
 
+    return data
+
+test = add_outliers_column(data)
+print(type(test))
+print("Number of outliers: ", len(test))
+print("outliers:\n", test.head(1))
+
+print(5 - mean(data["Previous_Scores"]))
 
 
 # From https://online.stat.psu.edu/stat501/lesson/11/11.2#paragraph--721
-
-# %%
-
-# %%
-print(X.head())
