@@ -232,15 +232,15 @@ def add_outliers_column(data):
     p = len(data.columns)
     n = len(data)
 
-    # I'm doing this wrong
+    # I'm doing this wrong. Need to study this more: https://online.stat.psu.edu/stat501/lesson/11/11.2
     leverage_lim = 3*(p/n)
     weights = sm_model.params.drop("const")
 
-
     return data
-print("Original Params:\n", sm_model.params, "\n")
+
+og_params = sm_model.params
 weights = sm_model.params.drop("const")
+print("og params:\n", og_params, "\n")
+
 print("Weights:\n", weights, "\n")
-print("Type: ", type(weights))
-print(data.head(2))
 # From https://online.stat.psu.edu/stat501/lesson/11/11.2#paragraph--721
