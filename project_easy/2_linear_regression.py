@@ -81,7 +81,7 @@ sm_model = sm.OLS(y_train, X_train).fit() # Reminder that statsmodels uses y fol
 
 # %% statsmodels OLS Results
 # General information
-print("Coefficients:\n", sm_model.params, "\n")
+print("Coefficients:\n", sm_model.params, "\n\n")
 print(sm_model.summary(), "\n")
 
 # Note: Will use sklearn MSE import later in the code
@@ -234,16 +234,13 @@ def add_outliers_column(data):
 
     # I'm doing this wrong
     leverage_lim = 3*(p/n)
-    data["outlier"] = ((data - data.mean()) > leverage_lim).any(axis=1)
+    weights = sm_model.params.drop("const")
+
 
     return data
-
-test = add_outliers_column(data)
-print(type(test))
-print("Number of outliers: ", len(test))
-print("outliers:\n", test.head(1))
-
-print(5 - mean(data["Previous_Scores"]))
-
-
+print("Original Params:\n", sm_model.params, "\n")
+weights = sm_model.params.drop("const")
+print("Weights:\n", weights, "\n")
+print("Type: ", type(weights))
+print(data.head(2))
 # From https://online.stat.psu.edu/stat501/lesson/11/11.2#paragraph--721
