@@ -5,10 +5,12 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+import statsmodels
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 from statsmodels.api import OLS
 from statsmodels.formula.api import ols
+import statsmodels.stats.outliers_influence
 
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
@@ -226,21 +228,19 @@ print(data.head())
 #print("outliers: ", outliers)
 
 
-# %%
-# Rewrite this in numpy
-def add_outliers_column(data):
-    p = len(data.columns)
-    n = len(data)
+# %% Defining Outliers
+sm_outliers = statsmodels.stats.outliers_influence.OLSInfluence(sm_model)
 
-    # I'm doing this wrong. Need to study this more: https://online.stat.psu.edu/stat501/lesson/11/11.2
-    leverage_lim = 3*(p/n)
-    weights = sm_model.params.drop("const")
+"""
+Before we begin with outliers, let's first cover the topic of
+studentized residuals.
 
-    return data
+# From https://online.stat.psu.edu/stat462/node/247/
+There are various measures for identifying extreme x values (high leverage observations), and
+unusual y values (outliers). When trying to identify outliers, one problem that can arise is
+is when there is a potential outlier that
+"""
 
-og_params = sm_model.params
-weights = sm_model.params.drop("const")
-print("og params:\n", og_params, "\n")
-
-print("Weights:\n", weights, "\n")
-# From https://online.stat.psu.edu/stat501/lesson/11/11.2#paragraph--721
+# Need to research the sigma parameter for being confident in this application
+sm_studentized_resids = sm_outliers.get_resid_studentized_external(sigma=None)
+print(sm_outliers)
