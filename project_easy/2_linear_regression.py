@@ -238,9 +238,25 @@ studentized residuals.
 # From https://online.stat.psu.edu/stat462/node/247/
 There are various measures for identifying extreme x values (high leverage observations), and
 unusual y values (outliers). When trying to identify outliers, one problem that can arise is
-is when there is a potential outlier that
+is when there is a potential outlier that influences the regression model to such an extent
+that the estimated regression function is "pulled" toward the potential outlier, so that it
+isn't flagged as an outlier using the standardized residual criterion.
+
+To address this issue, studentized residuals offer an alternative criterion for
+identifying outliers. The basic idea is to delete the observations one at a time,
+each time refitting the regression model on the remaining n-1 observations.
+
+Then, we compare the observed response values to their fitted values based on
+the models with the ith observation deleted.
+
+A studentized residual is simply a residual divided by its estimated standard deviation.
 """
 
 # Need to research the sigma parameter for being confident in this application
 sm_studentized_resids = sm_outliers.get_resid_studentized_external(sigma=None)
-print(sm_outliers)
+
+# From https://www.statology.org/studentized-residuals-in-python/
+# Studentized residuals
+stud_res = sm_model.outlier_test()
+print(stud_res.head())
+# How to print studentized residuals
