@@ -257,6 +257,22 @@ sm_studentized_resids = sm_outliers.get_resid_studentized_external(sigma=None)
 
 # From https://www.statology.org/studentized-residuals-in-python/
 # Studentized residuals
-stud_res = sm_model.outlier_test()
-print(stud_res.head())
-# How to print studentized residuals
+sm_stud_res = sm_model.outlier_test()
+print(sm_stud_res.head())
+"""
+Results:
+    * studentized residual
+    * Unadjusted p-value of the studentized residual
+    * The Bonferroni-corrected p-value of the studentized residual
+""";
+
+# %%
+# Plot predictor variable values vs. the corresponding studentized residuals
+plt.figure()
+y_stud = sm_stud_res["student_resid"]
+plt.scatter(sm_train_predictions, y_stud)
+plt.axhline(y=0, color='black', linestyle='--')
+plt.xlabel('Fitted Values')
+plt.ylabel('Studentized Residuals')
+plt.title('Studentized Residuals vs. Fitted Values')
+plt.show();
